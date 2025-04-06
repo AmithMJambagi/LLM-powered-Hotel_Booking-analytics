@@ -9,7 +9,7 @@ HF_ACCESS_TOKEN = "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"  # Replace with your a
 login(HF_ACCESS_TOKEN)
 
 #  Load data from your SQLite database
-df = pd.read_sql("SELECT * FROM bookings", "sqlite:///C:\\Users\\Admin\\Downloads\\project\\project\\bookings.db")
+df = pd.read_sql("SELECT * FROM bookings", "sqlite:///C:\\Users\\Admin\\Desktop\\LLMbasedhotelbookinganalytics\\project\\project\\bookings.db")
 #  Initialize the vector database using ChromaDB
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
 collection = chroma_client.get_or_create_collection(name="bookings")
@@ -19,14 +19,17 @@ embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 #  Index your data in ChromaDB (only once).
 # Comment out this block after the initial indexing to avoid re-indexing on every run.
-for i, row in df.iterrows():
-    text = f"Booking at {row['hotel']} on {row['arrival_date']} with price {row['adr']}."
+from tqdm import tqdm
+
+for i, row in tqdm(df.iterrows(), total=len(df), desc="Indexing"):
+    text = " | ".join([f"{col}: {row[col]}" for col in df.columns])
     vector = embedding_model.encode(text).tolist()
     collection.add(
         ids=[str(i)],
         embeddings=[vector],
-        metadatas={"hotel": row["hotel"], "arrival_date": row["arrival_date"], "adr": row["adr"]}
+        metadatas={col: row[col] for col in df.columns}
     )
+
 
 print("✅ Data indexed in ChromaDB!")
 
