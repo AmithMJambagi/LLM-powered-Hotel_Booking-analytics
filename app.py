@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-# Authenticate with Hugging Face
-HF_ACCESS_TOKEN = "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"
+# Authenticate with Hugging Face{generate the token with all necessary permissions}
+HF_ACCESS_TOKEN = "HF_ACESS_TOKEN"
 try:
     login(HF_ACCESS_TOKEN)
 except Exception as e:
@@ -66,8 +66,8 @@ def query_model_via_api(prompt, max_new_tokens=50):
 
 app = FastAPI()
 
-#  Authenticate with Hugging Face
-HF_ACCESS_TOKEN = "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"
+#  Authenticate with Hugging Face{generate the token with all necessary permissions}
+HF_ACCESS_TOKEN = "HF_ACCESS_TOKEN"
 login(HF_ACCESS_TOKEN)
 
 #  Load data
