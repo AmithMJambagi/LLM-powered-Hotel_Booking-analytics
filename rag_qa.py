@@ -4,8 +4,8 @@ from sentence_transformers import SentenceTransformer
 import requests
 from huggingface_hub import login
 
-#  Authenticate with Hugging Face using your token (for API requests)
-HF_ACCESS_TOKEN = "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"  # Replace with your actual token
+#  Authenticate with Hugging Face using your token (for API requests){generate the token with all necessary permissions}
+HF_ACCESS_TOKEN = "HF_ACCESS_TOKEN"  # Replace with your actual token
 login(HF_ACCESS_TOKEN)
 
 #  Load data from your SQLite database
